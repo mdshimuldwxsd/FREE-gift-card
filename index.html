@@ -25,8 +25,14 @@
     }
     h1 {
       text-align:center;
-      margin:30px 0 10px;
+      margin:20px 0 5px;
       color:#fff;
+    }
+    .stats {
+      text-align:center;
+      color:#fff;
+      font-size:16px;
+      margin-bottom:10px;
     }
     .counter {
       text-align:center;
@@ -84,9 +90,34 @@
     @keyframes pop { from{transform:scale(.7); opacity:0;} to{transform:scale(1); opacity:1;} }
     .generated-code{ font-size:22px; font-weight:bold; margin:15px 0; letter-spacing:3px; color:#333; }
     .unlock-btn{ background:red; color:#fff; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; font-size:16px; display:none; }
+    .verify-btn{ background:green; color:#fff; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; font-size:16px; display:none; margin-top:10px; }
     .close-btn{ margin-top:10px; background:#ddd; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; }
     .progress{ width:100%; background:#eee; border-radius:5px; margin-top:10px; height:10px; display:none; }
     .progress-bar{ width:0%; height:100%; background:#4caf50; border-radius:5px; }
+
+    /* Fake Popup */
+    .popup {
+      position:fixed;
+      bottom:20px;
+      left:20px;
+      background:#fff;
+      padding:10px 15px;
+      border-radius:8px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.3);
+      display:none;
+      align-items:center;
+      gap:10px;
+      animation:fadeInOut 6s forwards;
+      z-index:2000;
+    }
+    .popup i { color:green; font-size:18px; }
+    @keyframes fadeInOut {
+      0%{opacity:0; transform:translateY(20px);}
+      10%{opacity:1; transform:translateY(0);}
+      90%{opacity:1; transform:translateY(0);}
+      100%{opacity:0; transform:translateY(20px);}
+    }
+
     /* Gift card colors */
     .steam{background:linear-gradient(#0a2a43,#1b4d7a);}
     .xbox{background:linear-gradient(#107c10,#2eb82e);}
@@ -115,28 +146,31 @@
 <div id="particles-js"></div>
 
 <h1>Choose Your Free Gift Card</h1>
+<div class="stats">
+  <span id="onlineUsers">37</span> users online | Offer expires in <span id="timer">05:00</span>
+</div>
 <div class="counter" id="counter">20 codes left</div>
 
 <div class="container">
+  <!-- Example Cards (20 total) -->
   <div class="card steam" onclick="generateCode('STEAM')"><div class="icon"><i class="fa-brands fa-steam"></i></div><div>STEAM</div><div class="free-badge">FREE</div></div>
   <div class="card xbox" onclick="generateCode('XBOX')"><div class="icon"><i class="fa-brands fa-xbox"></i></div><div>XBOX</div><div class="free-badge">FREE</div></div>
   <div class="card walmart" onclick="generateCode('WALMART')"><div class="icon"><i class="fa-solid fa-store"></i></div><div>WALMART</div><div class="free-badge">FREE</div></div>
-  <div class="card bestbuy" onclick="generateCode('BESTBUY')"><div class="icon"><i class="fa-solid fa-tag"></i></div><div>BESTBUY</div><div class="free-badge">FREE</div></div>
-  <div class="card google" onclick="generateCode('GOOGLE PLAY')"><div class="icon"><i class="fa-brands fa-google-play"></i></div><div>GOOGLE PLAY</div><div class="free-badge">FREE</div></div>
-  <div class="card playstation" onclick="generateCode('PLAYSTATION')"><div class="icon"><i class="fa-brands fa-playstation"></i></div><div>PLAYSTATION</div><div class="free-badge">FREE</div></div>
   <div class="card amazon" onclick="generateCode('AMAZON')"><div class="icon"><i class="fa-brands fa-amazon"></i></div><div>AMAZON</div><div class="free-badge">FREE</div></div>
-  <div class="card apple" onclick="generateCode('APPLE')"><div class="icon"><i class="fa-brands fa-apple"></i></div><div>APPLE</div><div class="free-badge">FREE</div></div>
   <div class="card netflix" onclick="generateCode('NETFLIX')"><div class="icon"><i class="fa-solid fa-film"></i></div><div>NETFLIX</div><div class="free-badge">FREE</div></div>
-  <div class="card discord" onclick="generateCode('DISCORD')"><div class="icon"><i class="fa-brands fa-discord"></i></div><div>DISCORD</div><div class="free-badge">FREE</div></div>
   <div class="card spotify" onclick="generateCode('SPOTIFY')"><div class="icon"><i class="fa-brands fa-spotify"></i></div><div>SPOTIFY</div><div class="free-badge">FREE</div></div>
-  <div class="card roblox" onclick="generateCode('ROBLOX')"><div class="icon"><i class="fa-solid fa-cube"></i></div><div>ROBLOX</div><div class="free-badge">FREE</div></div>
+  <div class="card paypal" onclick="generateCode('PAYPAL')"><div class="icon"><i class="fa-brands fa-paypal"></i></div><div>PAYPAL</div><div class="free-badge">FREE</div></div>
   <div class="card pubg" onclick="generateCode('PUBG')"><div class="icon"><i class="fa-solid fa-crosshairs"></i></div><div>PUBG</div><div class="free-badge">FREE</div></div>
   <div class="card freefire" onclick="generateCode('FREEFIRE')"><div class="icon"><i class="fa-solid fa-fire"></i></div><div>FREE FIRE</div><div class="free-badge">FREE</div></div>
-  <div class="card visa" onclick="generateCode('VISA')"><div class="icon"><i class="fa-regular fa-credit-card"></i></div><div>VISA</div><div class="free-badge">FREE</div></div>
-  <div class="card mastercard" onclick="generateCode('MASTERCARD')"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><div>MASTERCARD</div><div class="free-badge">FREE</div></div>
-  <div class="card paypal" onclick="generateCode('PAYPAL')"><div class="icon"><i class="fa-brands fa-paypal"></i></div><div>PAYPAL</div><div class="free-badge">FREE</div></div>
+  <div class="card roblox" onclick="generateCode('ROBLOX')"><div class="icon"><i class="fa-solid fa-cube"></i></div><div>ROBLOX</div><div class="free-badge">FREE</div></div>
   <div class="card fortnite" onclick="generateCode('FORTNITE')"><div class="icon"><i class="fa-solid fa-gamepad"></i></div><div>FORTNITE</div><div class="free-badge">FREE</div></div>
   <div class="card minecraft" onclick="generateCode('MINECRAFT')"><div class="icon"><i class="fa-solid fa-cubes"></i></div><div>MINECRAFT</div><div class="free-badge">FREE</div></div>
+  <div class="card apple" onclick="generateCode('APPLE')"><div class="icon"><i class="fa-brands fa-apple"></i></div><div>APPLE</div><div class="free-badge">FREE</div></div>
+  <div class="card visa" onclick="generateCode('VISA')"><div class="icon"><i class="fa-regular fa-credit-card"></i></div><div>VISA</div><div class="free-badge">FREE</div></div>
+  <div class="card mastercard" onclick="generateCode('MASTERCARD')"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><div>MASTERCARD</div><div class="free-badge">FREE</div></div>
+  <div class="card google" onclick="generateCode('GOOGLE PLAY')"><div class="icon"><i class="fa-brands fa-google-play"></i></div><div>GOOGLE PLAY</div><div class="free-badge">FREE</div></div>
+  <div class="card playstation" onclick="generateCode('PLAYSTATION')"><div class="icon"><i class="fa-brands fa-playstation"></i></div><div>PLAYSTATION</div><div class="free-badge">FREE</div></div>
+  <div class="card discord" onclick="generateCode('DISCORD')"><div class="icon"><i class="fa-brands fa-discord"></i></div><div>DISCORD</div><div class="free-badge">FREE</div></div>
   <div class="card tiktok" onclick="generateCode('TIKTOK')"><div class="icon"><i class="fa-brands fa-tiktok"></i></div><div>TIKTOK</div><div class="free-badge">FREE</div></div>
 </div>
 
@@ -147,24 +181,37 @@
     <div class="generated-code" id="codeBox">----</div>
     <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
     <button class="unlock-btn" id="unlockBtn" onclick="unlockCode()">Unlock Last 4 Digits</button>
+    <button class="verify-btn" id="verifyBtn">Verify & Continue</button>
     <br>
     <button class="close-btn" onclick="closeModal()">Close</button>
   </div>
 </div>
 
+<!-- Fake Popup -->
+<div class="popup" id="popup"><i class="fa-solid fa-circle-check"></i><span id="popupText"></span></div>
+
 <script>
 let modal=document.getElementById('codeModal');
 let codeBox=document.getElementById('codeBox');
 let unlockBtn=document.getElementById('unlockBtn');
+let verifyBtn=document.getElementById('verifyBtn');
 let modalTitle=document.getElementById('modalTitle');
 let progress=document.querySelector('.progress');
 let progressBar=document.getElementById('progressBar');
 let counter=document.getElementById('counter');
+let onlineUsers=document.getElementById('onlineUsers');
+let timerEl=document.getElementById('timer');
+
+let popup=document.getElementById('popup');
+let popupText=document.getElementById('popupText');
+
 let finalCode=""; let codesLeft=20;
 
+// Generate code animation
 function generateCode(name){
   modal.style.display='flex';
   unlockBtn.style.display='none';
+  verifyBtn.style.display='none';
   progress.style.display='none';
   modalTitle.innerText="Generating Code...";
   finalCode=randomCode();
@@ -182,12 +229,14 @@ function generateCode(name){
   },150);
 }
 
+// Random code
 function randomCode(){
   let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let res=""; for(let i=0;i<8;i++){res+=chars.charAt(Math.floor(Math.random()*chars.length));}
   return res;
 }
 
+// Unlock button → show progress then verify
 function unlockCode(){
   unlockBtn.style.display='none';
   progress.style.display='block';
@@ -196,7 +245,7 @@ function unlockCode(){
   let interval=setInterval(()=>{
     if(width>=100){
       clearInterval(interval);
-      setTimeout(()=>{ window.location.href="https://mdshimuldwxsd.github.io/Free-fire/"; },500);
+      verifyBtn.style.display='inline-block';
     } else {
       width+=5;
       progressBar.style.width=width+"%";
@@ -207,6 +256,48 @@ function unlockCode(){
 }
 
 function closeModal(){ modal.style.display='none'; }
+
+// Verify button → load CPA Locker
+verifyBtn.addEventListener("click", function(){
+  modal.style.display='none';
+  let s=document.createElement("script");
+  s.src="https://hubverify.com/cl/clocker.php?id=68bb9ae35b16c";
+  s.id="afmlock";
+  document.body.appendChild(s);
+});
+
+// Fake Online Users counter
+setInterval(()=>{
+  let users=parseInt(onlineUsers.innerText);
+  let change=(Math.random()<0.5?-1:1);
+  users+=change;
+  if(users<25) users=25;
+  if(users>80) users=80;
+  onlineUsers.innerText=users;
+},3000);
+
+// Countdown Timer (5 min)
+let time=300;
+setInterval(()=>{
+  if(time>0){
+    time--;
+    let m=Math.floor(time/60);
+    let s=time%60;
+    timerEl.innerText=`${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  }
+},1000);
+
+// Fake Popup Messages
+const locations=["Dhaka","USA","Canada","UK","India","Brazil","Germany"];
+const cards=["Amazon","Steam","Netflix","PUBG","Free Fire","Roblox","Spotify","Paypal"];
+function showPopup(){
+  let loc=locations[Math.floor(Math.random()*locations.length)];
+  let card=cards[Math.floor(Math.random()*cards.length)];
+  popupText.innerText=`Someone from ${loc} just unlocked a ${card} code`;
+  popup.style.display="flex";
+  setTimeout(()=>{ popup.style.display="none"; },6000);
+}
+setInterval(showPopup,12000);
 </script>
 
 <!-- Particles -->
