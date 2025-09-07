@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Gift Cards</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body,html {
+      margin:0;
+      padding:0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      height:100%;
+    }
+    #particles-js {
+      position: fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:#111;
+      z-index:-1;
+    }
+    h1 {
+      text-align:center;
+      margin:30px 0 10px;
+      color:#fff;
+    }
+    .counter {
+      text-align:center;
+      font-size:18px;
+      font-weight:bold;
+      color:#ff4747;
+      margin-bottom:15px;
+    }
+    .container {
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:15px;
+      margin:20px;
+      max-width:1000px;
+    }
+    .card {
+      border-radius:10px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.3);
+      width:150px; height:190px;
+      text-align:center;
+      padding:10px;
+      cursor:pointer;
+      transition:transform 0.2s;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      color:#fff;
+      font-weight:bold;
+    }
+    .card:hover { transform:scale(1.05); }
+    .icon{ font-size:40px; margin-top:20px; }
+    .free-badge{ background:red; padding:4px 8px; border-radius:5px; font-size:13px; }
+
+    /* Modal */
+    .modal {
+      display:none;
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(0,0,0,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+    }
+    .modal-content {
+      background:#fff;
+      padding:20px;
+      border-radius:10px;
+      text-align:center;
+      width:320px;
+      animation:pop .3s ease-in-out;
+    }
+    @keyframes pop { from{transform:scale(.7); opacity:0;} to{transform:scale(1); opacity:1;} }
+    .generated-code{ font-size:22px; font-weight:bold; margin:15px 0; letter-spacing:3px; color:#333; }
+    .unlock-btn{ background:red; color:#fff; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; font-size:16px; display:none; }
+    .close-btn{ margin-top:10px; background:#ddd; border:none; padding:5px 10px; border-radius:5px; cursor:pointer; }
+    .progress{ width:100%; background:#eee; border-radius:5px; margin-top:10px; height:10px; display:none; }
+    .progress-bar{ width:0%; height:100%; background:#4caf50; border-radius:5px; }
+    /* Gift card colors */
+    .steam{background:linear-gradient(#0a2a43,#1b4d7a);}
+    .xbox{background:linear-gradient(#107c10,#2eb82e);}
+    .walmart{background:linear-gradient(#0047ab,#007bff);}
+    .bestbuy{background:linear-gradient(#1c1c1c,#3f3f3f);}
+    .google{background:linear-gradient(135deg,#4285F4,#34A853,#FBBC05,#EA4335);}
+    .playstation{background:linear-gradient(#001f4d,#003380);}
+    .amazon{background:linear-gradient(#ff9900,#ff6600);}
+    .apple{background:linear-gradient(#000,#333);}
+    .netflix{background:linear-gradient(#e50914,#b81d24);}
+    .discord{background:linear-gradient(#7289da,#5865f2);}
+    .spotify{background:linear-gradient(#1db954,#1ed760);}
+    .roblox{background:linear-gradient(#111,#444);}
+    .pubg{background:linear-gradient(#f59e0b,#d97706);}
+    .freefire{background:linear-gradient(#f43f5e,#be123c);}
+    .visa{background:linear-gradient(#1a1f71,#ff9900);}
+    .mastercard{background:linear-gradient(#eb001b,#f79e1b);}
+    .paypal{background:linear-gradient(#003087,#009cde);}
+    .fortnite{background:linear-gradient(#6366f1,#4338ca);}
+    .minecraft{background:linear-gradient(#065f46,#047857);}
+    .tiktok{background:linear-gradient(#000,#ff0050,#00f2ea);}
+  </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<h1>Choose Your Free Gift Card</h1>
+<div class="counter" id="counter">20 codes left</div>
+
+<div class="container">
+  <div class="card steam" onclick="generateCode('STEAM')"><div class="icon"><i class="fa-brands fa-steam"></i></div><div>STEAM</div><div class="free-badge">FREE</div></div>
+  <div class="card xbox" onclick="generateCode('XBOX')"><div class="icon"><i class="fa-brands fa-xbox"></i></div><div>XBOX</div><div class="free-badge">FREE</div></div>
+  <div class="card walmart" onclick="generateCode('WALMART')"><div class="icon"><i class="fa-solid fa-store"></i></div><div>WALMART</div><div class="free-badge">FREE</div></div>
+  <div class="card bestbuy" onclick="generateCode('BESTBUY')"><div class="icon"><i class="fa-solid fa-tag"></i></div><div>BESTBUY</div><div class="free-badge">FREE</div></div>
+  <div class="card google" onclick="generateCode('GOOGLE PLAY')"><div class="icon"><i class="fa-brands fa-google-play"></i></div><div>GOOGLE PLAY</div><div class="free-badge">FREE</div></div>
+  <div class="card playstation" onclick="generateCode('PLAYSTATION')"><div class="icon"><i class="fa-brands fa-playstation"></i></div><div>PLAYSTATION</div><div class="free-badge">FREE</div></div>
+  <div class="card amazon" onclick="generateCode('AMAZON')"><div class="icon"><i class="fa-brands fa-amazon"></i></div><div>AMAZON</div><div class="free-badge">FREE</div></div>
+  <div class="card apple" onclick="generateCode('APPLE')"><div class="icon"><i class="fa-brands fa-apple"></i></div><div>APPLE</div><div class="free-badge">FREE</div></div>
+  <div class="card netflix" onclick="generateCode('NETFLIX')"><div class="icon"><i class="fa-solid fa-film"></i></div><div>NETFLIX</div><div class="free-badge">FREE</div></div>
+  <div class="card discord" onclick="generateCode('DISCORD')"><div class="icon"><i class="fa-brands fa-discord"></i></div><div>DISCORD</div><div class="free-badge">FREE</div></div>
+  <div class="card spotify" onclick="generateCode('SPOTIFY')"><div class="icon"><i class="fa-brands fa-spotify"></i></div><div>SPOTIFY</div><div class="free-badge">FREE</div></div>
+  <div class="card roblox" onclick="generateCode('ROBLOX')"><div class="icon"><i class="fa-solid fa-cube"></i></div><div>ROBLOX</div><div class="free-badge">FREE</div></div>
+  <div class="card pubg" onclick="generateCode('PUBG')"><div class="icon"><i class="fa-solid fa-crosshairs"></i></div><div>PUBG</div><div class="free-badge">FREE</div></div>
+  <div class="card freefire" onclick="generateCode('FREEFIRE')"><div class="icon"><i class="fa-solid fa-fire"></i></div><div>FREE FIRE</div><div class="free-badge">FREE</div></div>
+  <div class="card visa" onclick="generateCode('VISA')"><div class="icon"><i class="fa-regular fa-credit-card"></i></div><div>VISA</div><div class="free-badge">FREE</div></div>
+  <div class="card mastercard" onclick="generateCode('MASTERCARD')"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><div>MASTERCARD</div><div class="free-badge">FREE</div></div>
+  <div class="card paypal" onclick="generateCode('PAYPAL')"><div class="icon"><i class="fa-brands fa-paypal"></i></div><div>PAYPAL</div><div class="free-badge">FREE</div></div>
+  <div class="card fortnite" onclick="generateCode('FORTNITE')"><div class="icon"><i class="fa-solid fa-gamepad"></i></div><div>FORTNITE</div><div class="free-badge">FREE</div></div>
+  <div class="card minecraft" onclick="generateCode('MINECRAFT')"><div class="icon"><i class="fa-solid fa-cubes"></i></div><div>MINECRAFT</div><div class="free-badge">FREE</div></div>
+  <div class="card tiktok" onclick="generateCode('TIKTOK')"><div class="icon"><i class="fa-brands fa-tiktok"></i></div><div>TIKTOK</div><div class="free-badge">FREE</div></div>
+</div>
+
+<!-- Modal -->
+<div id="codeModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Generating Code...</h3>
+    <div class="generated-code" id="codeBox">----</div>
+    <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+    <button class="unlock-btn" id="unlockBtn" onclick="unlockCode()">Unlock Last 4 Digits</button>
+    <br>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+let modal=document.getElementById('codeModal');
+let codeBox=document.getElementById('codeBox');
+let unlockBtn=document.getElementById('unlockBtn');
+let modalTitle=document.getElementById('modalTitle');
+let progress=document.querySelector('.progress');
+let progressBar=document.getElementById('progressBar');
+let counter=document.getElementById('counter');
+let finalCode=""; let codesLeft=20;
+
+function generateCode(name){
+  modal.style.display='flex';
+  unlockBtn.style.display='none';
+  progress.style.display='none';
+  modalTitle.innerText="Generating Code...";
+  finalCode=randomCode();
+  let shown=finalCode.substring(0,4)+"-****";
+  let i=0;
+  let anim=setInterval(()=>{
+    codeBox.innerText=randomCode().substring(0,4)+"-****";
+    i++;
+    if(i>10){
+      clearInterval(anim);
+      codeBox.innerText=shown;
+      modalTitle.innerText=name+" Code:";
+      unlockBtn.style.display='inline-block';
+    }
+  },150);
+}
+
+function randomCode(){
+  let chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let res=""; for(let i=0;i<8;i++){res+=chars.charAt(Math.floor(Math.random()*chars.length));}
+  return res;
+}
+
+function unlockCode(){
+  unlockBtn.style.display='none';
+  progress.style.display='block';
+  progressBar.style.width='0%';
+  let width=0;
+  let interval=setInterval(()=>{
+    if(width>=100){
+      clearInterval(interval);
+      setTimeout(()=>{ window.location.href="https://mdshimuldwxsd.github.io/Free-fire/"; },500);
+    } else {
+      width+=5;
+      progressBar.style.width=width+"%";
+    }
+  },75);
+  codesLeft--; if(codesLeft<0) codesLeft=0;
+  counter.innerText=codesLeft+" codes left";
+}
+
+function closeModal(){ modal.style.display='none'; }
+</script>
+
+<!-- Particles -->
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js",{
+  "particles":{"number":{"value":50},"color":{"value":"#00ff99"},"shape":{"type":"circle"},"opacity":{"value":0.5},"size":{"value":3},"line_linked":{"enable":true,"distance":120,"color":"#00ffcc","opacity":0.4,"width":1},"move":{"enable":true,"speed":2}}
+});
+</script>
+
+</body>
+</html>
